@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en-EN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Frontlemma</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    @font-face {
+        font-family: 'clarkebold';
+        src: url('clarke-medium-webfont.woff2') format('woff2'),
+             url('clarke-medium-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    html{
+        height: 100%;
+        font-size: 62.5%;
+        background: black;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+    body{
+        margin: 0;
+        padding: 5px;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+        font-size: 4.5rem;
+        line-height: 5rem;
+        font-family: 'clarkebold';
+    }
+    body:before,
+    body:after{
+        content: "";
+        position: absolute;
+        border: 8px solid #2e2014;
+        background: #ffc13d;
+    }
+    body:before{
+        width: 30px;
+        top: 21px;
+        left: 7px;
+        border-width: 8px 0 8px 5px;
+        border-radius: 0 3px 0 0;
+        transform: skew(0deg, -45deg);
+        height: calc(100% - 63px); 
+    }
+    body:after{
+        bottom: 9px;
+        left: 24px;
+        height: 30px;
+        border-width: 0 9px 5px 4px;
+        width: calc(100% - 63px);
+        transform: skew(-45deg, 0);
+    }
+    main{
+        box-sizing: border-box;
+        margin: 8px 8px 43px 43px;
+        width: calc(100% - 54px);
+        height: calc(100% - 54px);
+        border: 45px solid #ffda6a;
+        box-shadow: 0 0 0 8px #2e2014;
+        background: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+    }
+    main:before{
+        box-sizing: border-box;
+        content: "";
+        left: -2px;
+        top: -2px;
+        position: absolute;
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        border: 8px solid #2e2014;
+        pointer-events: none;
+    }
+    section{
+        flex: 1;
+        color: white;
+        opacity: 0;
+        transform: scale(.4);
+        box-sizing: border-box;
+        padding: 33px 33px 30px 30px;
+        transition: opacity .2s, transform .2s;
+        transform-origin: 0 50%;
+    }
+    section:hover{
+        cursor: pointer;
+    }
+    section:last-child{
+        text-align: right;
+        transform-origin: 100% 50%;
+    }
+    .active{
+        opacity: 1;
+        transform: scale(1);
+    }
+    .chosen{
+        transform: scale(1.6);
+    }
+    .unchosen{
+        opacity: 0;
+        transform: scale(.4);
+    }
+    @media screen and (min-width: 1280px){
+        body{
+            font-size: 8rem;
+            line-height: 8.5rem;
+        }
+    }
+    @media screen and (max-width: 1280px){
+        body{
+            font-size: 6rem;
+            line-height: 6.5rem;
+        }
+    }
+    @media screen and (max-width: 960px){
+        body{
+            font-size: 4rem;
+            line-height: 4.3rem;
+        }
+    }
+    @media screen and (max-width: 760px){
+        body{
+            font-size: 3rem;
+            line-height: 3.4rem;
+        }
+    }
+    @media screen and (max-width:500px){
+        body{
+            font-size: 2rem;
+            line-height: 2.2rem;
+        }
+    }
+    </style>
+<head>
+<body>
+    <main>
+    <section></section>
+    <section></section>
+    </main>
+</body>
+<script>
+var sections = Array.prototype.slice.apply(document.querySelectorAll('section'));
+var frontlemmaContainer = sections[0];
+var dilemmaContainer = sections[1];
+var hasChosen = true;
+var delay = 300;
+function shuffle () {
+    resetClassNames();
+    
+    setTimeout(function () {
+        frontlemmaContainer.innerHTML = frontlemmas[ Math.floor(Math.random() * frontlemmasLength ) ];
+        dilemmaContainer.innerHTML = dilemmas[ Math.floor(Math.random() * dilemmasLength ) ];
+        setClassNames('active');
+    }, delay);
+}
+document.body.addEventListener('click', function (e) {
+    var target = e.target;
+    var nonChosen;
+    var scheduledReset;
+
+    if ('SECTION' === target.nodeName) {
+        scheduledReset = function () {
+            target.removeEventListener('webkitTransitionEnd', scheduledReset);
+            target.removeEventListener('transitionend', scheduledReset);
+            setTimeout(shuffle, delay * 5);
+        };
+
+        hasChosen = true;
+        nonChosen = sections.filter(function(section) {
+            return section !== target;
+        });
+        nonChosen.forEach(function (el) {
+            el.className = 'active unchosen';
+        });
+        target.addEventListener('webkitTransitionEnd', scheduledReset);
+        target.addEventListener('transitionend', scheduledReset);
+        target.className = 'active chosen';
+
+    }
+});
+
+function resetClassNames() {
+    setClassNames('');
+}
+function setClassNames (className) {
+    sections.forEach(function (section) {
+        section.className = className;
+    });
+}
+
+var frontlemmas = [
+    'Can not use a keyboard ever again',
+    'Can not use your trackpad ever again',
+    'Can\'t ever use your your favourite operating system again',
+    'Every time you use a keyboard shortcut say the letters out loud',
+    'Every time you use autocomplete you have to make a squeaky noise',
+    'Every time you save a document you have to stand up from your chair',
+    'You have to get a tattoo of your last commit message',
+    'You have to steer every conversation to the topic of front end development',
+    'When working with headphones you have to sing along out loud',
+    'Every standup you have to stand on one leg',
+    'When pair programming you have to sit on each others lap',
+    'When pair programming you both can only use one hand and have to type together',
+    'Only use dial up connection',
+    'You cursor buttons point in random directions',
+    'You can only whisper to your colleagues',
+    'You have to solve issues of open source projects an hour each day',
+    'You can only use Bootstap'
+];
+var dilemmas = [
+    'You have to eat from your neighbour\'s rubbish bin once a week',
+    'You cannot stretch your fingers',
+    'You can only walk backwards',
+    'You have to pay by throwing money at the cashier',
+    'All your digital communication has to be handwritten from now on',
+    'In public transport, you always have to sit on a stranger\'s lap',
+    'You cannot speak until you raise your hand and someone says it\'s your turn',
+    'You cannot walk on the cracks in the pavement',
+    'Before you go to sleep, you have to solve a five-star sudoku puzzle',
+    'When you share a lift with someone, you have to stand right up against them',
+    'You have to carry your partner on your back everywhere he/she goes',
+    'you always hear the sounds of a vacuum cleaner in your head',
+    'At house parties, you always have to sit under the table',
+    'You cannot use your hands while eating or drinking',
+    'You can only eat round thing',
+    'Whenever you laugh, you get a new wrinkle',
+    'the color purple makes you nauseous',
+    'You get an electric shock every time you laugh out loud',
+    'You have to wear an emergency light and siren on your head every time you are outside',
+    'You can only wear your parent\'s clothes',
+    'You have to prepare a five-course dinner every evening',
+    'Your farts are visible',
+    'When someone makes a grammar mistake, you give them a corrective slap',
+    'Everything you touch sticks to your hands',
+    'You can only meet up with people on Sunday mornings between seven and eight a.m.',
+    'Your tongue is ten feet long',
+    'Your alarm goes off every hour',
+    'Whenever you yawn, a fly flies into your mouth',
+    'Every time you\'re at an intersection, you have to control traffic for five minutes',
+    'Your knee and elbow joints bend the other way',
+    'You always have to put toothpaste in your food',
+    'Every day a live eel slips out of your mouth',
+    'Whenever you see someone eating, you have to ask them for a bite.'
+];
+var frontlemmasLength = frontlemmas.length;
+var dilemmasLength = dilemmas.length;
+
+shuffle();
+
+try{
+    document.body.removeChild(document.querySelector('body > a'));
+}catch(e){};
+</script>
+<html>

@@ -85,10 +85,12 @@
     main:after{
         content: "or";
         position: absolute;
-        left: 50%;
+        display: block;
+        width: 100%;
+        text-align: center;
         top: 50%;
-        margin: -20px 0 0 -02px;
         transition: opacity .2s, transform .2s;
+        pointer-events: none;
     }
     main.animating:after{
         opacity: 0;
@@ -102,7 +104,7 @@
         transform: scale(.4);
         text-align: center;
         box-sizing: border-box;
-        padding: 0 10%;
+        margin: 0 10%;
         transition: opacity .2s, transform .2s;
         transform-origin: 0 50%;
     }

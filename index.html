@@ -78,14 +78,24 @@
         height: calc(100% + 4px);
         border: 8px solid #2e2014;
         pointer-events: none;
+        background: #d4e8fe;
+    }
+    main:after{
+        content: "or";
+        position: absolute;
+        left:50%;
+        top: 50%;
+        margin: -30px 0 0 -20px;
     }
     section{
         flex: 1;
-        color: white;
+        color: black;
+        text-transform: uppercase;
         opacity: 0;
         transform: scale(.4);
+        text-align: center;
         box-sizing: border-box;
-        padding: 33px 33px 30px 30px;
+        padding: 10px 40px;
         transition: opacity .2s, transform .2s;
         transform-origin: 0 50%;
     }
@@ -93,7 +103,6 @@
         cursor: pointer;
     }
     section:last-child{
-        text-align: right;
         transform-origin: 100% 50%;
     }
     .active{
@@ -107,6 +116,12 @@
         opacity: 0;
         transform: scale(.4);
     }
+    @media screen and (min-width: 1600px){
+        body{
+            font-size: 12rem;
+            line-height: 13rem;
+        }
+    }
     @media screen and (min-width: 1280px){
         body{
             font-size: 8rem;
@@ -116,25 +131,25 @@
     @media screen and (max-width: 1280px){
         body{
             font-size: 6rem;
-            line-height: 6.5rem;
+            line-height: 6.3rem;
         }
     }
     @media screen and (max-width: 960px){
         body{
             font-size: 4rem;
-            line-height: 4.3rem;
+            line-height: 4.2rem;
         }
     }
     @media screen and (max-width: 760px){
         body{
             font-size: 3rem;
-            line-height: 3.4rem;
+            line-height: 3.2rem;
         }
     }
     @media screen and (max-width:500px){
         body{
             font-size: 2rem;
-            line-height: 2.2rem;
+            line-height: 2.1rem;
         }
     }
     </style>

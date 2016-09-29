@@ -23,7 +23,6 @@
     }
     body{
         margin: 0;
-/*         padding: 5px; */
         box-sizing: border-box;
         height: 100%;
         width: 100%;
@@ -33,57 +32,14 @@
         min-width: 400px;
         min-height: 400px;
     }
-/*     body:before,
-    body:after{
-        content: "";
-        position: absolute;
-        border: 8px solid #2e2014;
-        background: #ffc13d;
-    }
-    body:before{
-        width: 30px;
-        top: 21px;
-        left: 7px;
-        border-width: 8px 0 8px 5px;
-        border-radius: 0 3px 0 0;
-        transform: skew(0deg, -45deg);
-        height: calc(100% - 63px); 
-    }
-    body:after{
-        bottom: 9px;
-        left: 24px;
-        height: 30px;
-        border-width: 0 9px 5px 4px;
-        width: calc(100% - 63px);
-        transform: skew(-45deg, 0);
-    } */
     main{
         box-sizing: border-box;
-/*         margin: 8px 8px 43px 43px; */
-/*         width: calc(100% - 54px); */
-/*         height: calc(100% - 54px); */
-/*         border: 45px solid #ffda6a; */
-/*         box-shadow: 0 0 0 8px #2e2014; */
-/*         background: black; */
-height: 100%;
+        height: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: #d4e8fe;
-/*         position: relative; */
     }
-/*     main:before{
-        box-sizing: border-box;
-        content: "";
-        left: -2px;
-        top: -2px;
-        position: absolute;
-        width: calc(100% + 4px);
-        height: calc(100% + 4px);
-        border: 8px solid #2e2014;
-        pointer-events: none;
-        background: #d4e8fe;
-    } */
     main:after{
         content: "or";
         position: absolute;
@@ -118,10 +74,10 @@ height: 100%;
     }
     .active{
         opacity: 1;
-        transform: scale(1);
+        transform: scale(.8);
     }
     .chosen{
-        transform: scale(1.2);
+        transform: scale(1);
     }
     .unchosen{
         opacity: 0;
@@ -178,6 +134,8 @@ var frontlemmaContainer = sections[0];
 var dilemmaContainer = sections[1];
 var hasChosen = true;
 var delay = 300;
+var locked = false;
+
 function shuffle () {
     resetClassNames();
     
@@ -186,6 +144,7 @@ function shuffle () {
         dilemmaContainer.innerHTML = dilemmas[ Math.floor(Math.random() * dilemmasLength ) ];
         setClassNames('active');
         main.className = '';
+        locked = false;
     }, delay);
 }
 document.body.addEventListener('click', function (e) {
@@ -193,7 +152,9 @@ document.body.addEventListener('click', function (e) {
     var nonChosen;
     var scheduledReset;
 
-    if ('SECTION' === target.nodeName) {
+    if ('SECTION' === target.nodeName && !locked) {
+        locked = true;
+        playASound();
         main.className = 'animating';
 
         scheduledReset = function () {
@@ -224,6 +185,17 @@ function setClassNames (className) {
         section.className = className;
     });
 }
+function keyDown (e) {
+    console.log(e.which);
+    var which = e.which;
+    if (83 === which) {
+        sections[0].click();
+    } else if (101 === which) {
+        sections[1].click();
+    }
+}
+
+document.documentElement.addEventListener('keydown', keyDown, true );
 
 var frontlemmas = [
     'Can not use a keyboard ever again',
@@ -284,8 +256,21 @@ var dilemmasLength = dilemmas.length;
 
 shuffle();
 
-try{
-    document.body.removeChild(document.querySelector('body > a'));
-}catch(e){};
+var audios = ['boo.mp3','applause.mp3'].map(function (audioURI) {
+   var audio = document.createElement('audio');
+    audio.src = audioURI;
+    audio.loop = false;
+   return audio;
+});
+
+var audiosLength = audios.length;
+function playASound (){
+    var audio = audios[Math.floor( Math.random() * audiosLength )];
+//     console.dir(audio);
+    audio.pause();
+    audio.currentTime = 0;
+    audio.play();
+};
+
 </script>
 <html>

@@ -207,7 +207,7 @@ var frontlemmas = [
     'When working with headphones you have to sing along out loud',
     'Every standup you have to stand on one leg',
     'When pair programming you have to sit on each others lap',
-    'When pair programming you both can onlny use one hand and have to type together',
+    'When pair programming you both can only use one hand and have to type together',
     'You can only use a dial up internet connection',
     'You cursor buttons point to random directions',
     'You can only whisper to your colleagues',
@@ -224,16 +224,17 @@ var frontlemmas = [
     'Take a bow every time you say the word "user"',
     'Can never use any shade of the color blue again',
     'Use a non monospace font in your code editor',
-    'Use the "as a.. I want.. So I can.." story template for every sentence you say'
+    'Use the "as a.. I want.. So I can.." story template for every sentence you say',
+    'You\'ll have to design everything with Microsoft Word and Wordart'
 ];
 var dilemmas = [
-    'You have to eat from your neighbour\'s rubbish bin once a week',
+    'You have to eat from your neighbour’s rubbish bin once a week',
     'You cannot stretch your fingers',
     'You can only walk backwards',
     'You have to pay by throwing money at the cashier',
     'All your digital communication has to be handwritten from now on',
-    'In public transport, you always have to sit on a stranger\'s lap',
-    'You cannot speak until you raise your hand and someone says it\'s your turn',
+    'In public transport, you always have to sit on a stranger’s lap',
+    'You cannot speak until you raise your hand and someone says it’s your turn',
     'You cannot walk on the cracks in the pavement',
     'Before you go to sleep, you have to solve a five-star sudoku puzzle',
     'When you share a lift with someone, you have to stand right up against them',
@@ -241,12 +242,12 @@ var dilemmas = [
     'you always hear the sounds of a vacuum cleaner in your head',
     'At house parties, you always have to sit under the table',
     'You cannot use your hands while eating or drinking',
-    'You can only eat round thing',
+    'You can only eat round things',
     'Whenever you laugh, you get a new wrinkle',
     'the color purple makes you nauseous',
     'You get an electric shock every time you laugh out loud',
     'You have to wear an emergency light and siren on your head every time you are outside',
-    'You can only wear your parent\'s clothes',
+    'You can only wear your parent’s clothes',
     'You have to prepare a five-course dinner every evening',
     'Your farts are visible',
     'When someone makes a grammar mistake, you give them a corrective slap',
@@ -255,11 +256,12 @@ var dilemmas = [
     'Your tongue is ten feet long',
     'Your alarm goes off every hour',
     'Whenever you yawn, a fly flies into your mouth',
-    'Every time you\'re at an intersection, you have to control traffic for five minutes',
+    'Every time you’re at an intersection, you have to control traffic for five minutes',
     'Your knee and elbow joints bend the other way',
     'You always have to put toothpaste in your food',
     'Every day a live eel slips out of your mouth',
-    'Whenever you see someone eating, you have to ask them for a bite.'
+    'Whenever you see someone eating, you have to ask them for a bite.',
+    'Wear all your clothes backwards'
 ];
 var frontlemmasLength = frontlemmas.length;
 var dilemmasLength = dilemmas.length;
@@ -276,7 +278,6 @@ var audios = ['boo.mp3','applause.mp3'].map(function (audioURI) {
 var audiosLength = audios.length;
 function playASound (){
     var audio = audios[Math.floor( Math.random() * audiosLength )];
-//     console.dir(audio);
     audio.pause();
     audio.currentTime = 0;
     audio.play();
